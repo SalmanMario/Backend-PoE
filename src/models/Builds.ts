@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import League from "./LeaguesInfo";
 
 const itemSchema = {
   linkUnique: {
@@ -14,7 +15,7 @@ const itemSchema = {
 const BuildSchema = new mongoose.Schema({
   leagueId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Leagues",
+    ref: League.collection.name,
     required: [true, "League ID must be specified"],
   },
   cardImage: {

@@ -1,28 +1,28 @@
 import express from "express";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
 
 // Import Leagues Routes
-import builds from "../src/routes/builds/index";
+import Builds from "../src/routes/builds";
+import Leagues from "../src/routes/leagues";
 // import Leagues info Routes
 import legionInfoRoute from "../src/routes/leaguesInfo/legionInfo";
-import metamorphInfoRoute from "../src/routes/leaguesInfo/metamorphInfo";
 
 dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 
 const dbConnection = process.env.DB_CONNECTION || "default-string-value";
-
+console.log(dbConnection)
 // Middlewares League
 app.use(cors());
 
 // Middlewares League Info
-app.use("/legionInfo", legionInfoRoute); // Separate route for legionInfo
+app.use("/leagues", Leagues); // Separate route for legionInfo
 // app.use("/metamorphInfo", metamorphInfoRoute); // Separate route for metamorphInfo
-app.use("/builds", builds);
+app.use("/builds", Builds);
 // Routes
 app.get("/", (req, res) => {
   res.send("We are on home");

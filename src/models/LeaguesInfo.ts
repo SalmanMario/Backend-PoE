@@ -4,6 +4,7 @@ const leagueInfoSchema = new mongoose.Schema({
   name: {
     type: String,
     require: true,
+    unique: true,
   },
   linkTrailer: {
     type: String,
@@ -23,6 +24,6 @@ const leagueInfoSchema = new mongoose.Schema({
   },
 });
 
-const leagueInfo = mongoose.model("Leagues", leagueInfoSchema);
-
-export default leagueInfo;
+const League = mongoose.model("League", leagueInfoSchema);
+console.log("Collection Name",League.collection.name);
+export default League;
