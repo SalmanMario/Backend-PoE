@@ -11,8 +11,17 @@ const itemSchema = {
   },
 };
 
-const PostSchema = new mongoose.Schema({
+const BuildSchema = new mongoose.Schema({
+  leagueId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Leagues",
+    required: [true, "League ID must be specified"],
+  },
   cardImage: {
+    type: String,
+    require: true,
+  },
+  ascendancy: {
     type: String,
     require: true,
   },
@@ -70,6 +79,6 @@ const PostSchema = new mongoose.Schema({
   },
 });
 
-const League = mongoose.model("League", PostSchema);
+const Build = mongoose.model("Build", BuildSchema);
 
-export default League;
+export default Build;

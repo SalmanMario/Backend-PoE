@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import League from "../../models/Leagues";
+import League from "../../models/LeaguesInfo";
 
 const router = express.Router();
 
@@ -14,7 +14,7 @@ router.get("/", async (req: Request, res: Response) => {
 });
 
 // Submits a league
-router.post("/legion", async (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
   const league = new League(req.body);
 
   try {
@@ -39,15 +39,6 @@ router.get("/:leagueId", async (req: Request, res: Response) => {
 router.delete("/:leagueId", async (req: Request, res: Response) => {
   try {
     const removeLeague = await League.deleteOne({ _id: req.params.leagueId });
-    res.json(removeLeague);
-  } catch (error) {
-    res.json({ message: error });
-  }
-});
-
-router.delete("/league", async (req: Request, res: Response) => {
-  try {
-    const removeLeague = await League.deleteMany();
     res.json(removeLeague);
   } catch (error) {
     res.json({ message: error });

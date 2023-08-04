@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "start": "nodemon src/app.ts",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q src/app.ts\"",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/app.js\"",
     "swagger:generate": "node src/swagger.js"
   },
   "keywords": [],
