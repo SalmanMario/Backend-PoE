@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import LegionInfo from "../../models/LeaguesInfo";
+import LegionInfo from "../models/LeaguesInfo";
 
 const router = express.Router();
 

@@ -1,5 +1,8 @@
 import express, { Request, Response } from "express";
-import Builds from "../../models/Builds";
+import Builds from "../models/Builds";
+import League from "../models/LeaguesInfo";
+
+import { aggregateInField } from "../utils";
 
 const router = express.Router();
 
@@ -26,13 +29,25 @@ router.post("/", async (req: Request, res: Response) => {
 });
 
 // Specific leagues
-router.get("/:leagueId", async (req: Request, res: Response) => {
+router.get("/:leagueName", async (req: Request, res: Response) => {
   try {
-    const leagueId = req.params.leagueId;
-    const league = await Builds.find({ leagueId });
-    res.json(league);
+    const leagueName = req.params.leagueName;
+
+    const aggregateResult = await aggregateInField({
+      model: Builds,
+      from: League.collection.name,
+      localField: "leagueId",
+      searchKey: "name",
+      searchValue: leagueName,
+      as: "leagueInfo",
+    });
+
+    console.log({ aggregateResult });
+
+    res.json(aggregateResult);
   } catch (error) {
     console.log(error);
+    res.status(500).send(error);
   }
 });
 
@@ -49,14 +64,15 @@ router.delete("/:buildId", async (req: Request, res: Response) => {
 // Update a build
 router.patch("/:buildId", async (req: Request, res: Response) => {
   try {
-    const updateLeague = await Builds.findByIdAndUpdate(req.params.buildId, req.body);
+    const updateLeague = await Builds.findByIdAndUpdate(
+      req.params.buildId,
+      req.body
+    );
     res.json(updateLeague);
     console.log("Changes are successfully");
   } catch (error) {
     res.json({ message: error });
   }
 });
-
-module.exports = router;
 
 export default router;

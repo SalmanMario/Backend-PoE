@@ -4,6 +4,7 @@ const leagueInfoSchema = new mongoose.Schema({
   name: {
     type: String,
     require: true,
+    unique: true,
   },
   linkTrailer: {
     type: String,
@@ -14,15 +15,15 @@ const leagueInfoSchema = new mongoose.Schema({
     require: true,
   },
   releaseDate: {
-    type: String,
+    type: Date,
     require: true,
   },
   endDate: {
-    type: String,
+    type: Date,
     require: true,
   },
 });
 
-const leagueInfo = mongoose.model("Leagues", leagueInfoSchema);
-
-export default leagueInfo;
+const League = mongoose.model("League", leagueInfoSchema);
+console.log("Collection Name",League.collection.name);
+export default League;
