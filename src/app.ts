@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
 
@@ -13,7 +13,10 @@ dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 
-const dbConnection = process.env.DB_CONNECTION || "default-string-value";
+const dbConnection = process.env.DB_CONNECTION;
+if (!dbConnection) {
+  throw new Error("Erorare...");
+}
 console.log(dbConnection);
 // Middlewares League
 app.use(cors());
