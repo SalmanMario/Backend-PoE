@@ -6,9 +6,7 @@ const router = express.Router();
 // Get back all the leagues
 router.get("/", async (req: Request, res: Response) => {
   try {
-    console.log("DB IS ",LegionInfo.db.name);
     const legionInfo = await LegionInfo.find();
-    console.log({ legionInfo });
     res.json(legionInfo);
   } catch (error) {
     res.json(error);

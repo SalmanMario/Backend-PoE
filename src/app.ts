@@ -8,14 +8,13 @@ import cors from "cors";
 import Builds from "../src/routes/builds";
 import Leagues from "../src/routes/leagues";
 // import Leagues info Routes
-import legionInfoRoute from "../src/routes/leaguesInfo/legionInfo";
 
 dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 
 const dbConnection = process.env.DB_CONNECTION || "default-string-value";
-console.log(dbConnection)
+console.log(dbConnection);
 // Middlewares League
 app.use(cors());
 

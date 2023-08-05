@@ -2,6 +2,8 @@ import express, { Request, Response } from "express";
 import Builds from "../models/Builds";
 import League from "../models/LeaguesInfo";
 
+import { aggregateInField } from "../utils";
+
 const router = express.Router();
 
 // Get back all the builds
@@ -31,24 +33,17 @@ router.get("/:leagueName", async (req: Request, res: Response) => {
   try {
     const leagueName = req.params.leagueName;
 
-    const aggregateResult = await Builds.aggregate([
-      {
-        $lookup: {
-          from: League.collection.name,
-          localField: "leagueId",
-          foreignField: "_id",
-          as: "leagueInfo",
-        },
-      },
-      {
-        $unwind: "$leagueInfo",
-      },
-      {
-        $match: {
-          "leagueInfo.name": leagueName,
-        },
-      },
-    ]);
+    const aggregateResult = await aggregateInField({
+      model: Builds,
+      from: League.collection.name,
+      localField: "leagueId",
+      searchKey: "name",
+      searchValue: leagueName,
+      as: "leagueInfo",
+    });
+
+    console.log({ aggregateResult });
+
     res.json(aggregateResult);
   } catch (error) {
     console.log(error);
