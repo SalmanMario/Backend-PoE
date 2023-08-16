@@ -1,12 +1,12 @@
 import express, { Request, Response } from "express";
-import LegionInfo from "../models/LeaguesInfo";
+import LeagueInfo from "../models/LeaguesInfo";
 
 const router = express.Router();
 
 // Get back all the leagues
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const legionInfo = await LegionInfo.find();
+    const legionInfo = await LeagueInfo.find();
     res.json(legionInfo);
   } catch (error) {
     res.json(error);
@@ -15,7 +15,7 @@ router.get("/", async (req: Request, res: Response) => {
 
 // Submit LegionInfo
 router.post("/", async (req: Request, res: Response) => {
-  const legionInfo = new LegionInfo(req.body);
+  const legionInfo = new LeagueInfo(req.body);
 
   try {
     const saveLegionInfo = await legionInfo.save();
@@ -25,43 +25,33 @@ router.post("/", async (req: Request, res: Response) => {
   }
 });
 
-// Specific league by ID
 // router.get("/:legionInfoId", async (req: Request, res: Response) => {
 //   try {
-//     const legionInfo = await LegionInfo.findById(req.params.legionInfoId);
+//     const legionInfo = await LeagueInfo.findById(req.params.legionInfoId);
 //     res.json(legionInfo);
 //   } catch (error) {
 //     console.log(error);
 //   }
 // });
 
-// // Delete league by ID
-// router.delete("/:legionInfoId", async (req: Request, res: Response) => {
-//   try {
-//     const removeLegionInfo = await LegionInfo.deleteOne({ _id: req.params.legionInfoId });
-//     res.json(removeLegionInfo);
-//   } catch (error) {
-//     res.json({ message: error });
-//   }
-// });
+// Delete league by ID
+router.delete("/:_id", async (req: Request, res: Response) => {
+  try {
+    const removeLeague = await LeagueInfo.findByIdAndDelete(req.params._id);
+    res.json(removeLeague);
+  } catch (error) {
+    res.json({ message: error });
+  }
+});
 
-// // Update a league by ID
-// router.patch("/:legionInfoId", async (req: Request, res: Response) => {
-//   try {
-//     const updateLegionInfo = await LegionInfo.updateOne(
-//       { _id: req.params.legionInfoId },
-//       {
-//         $set: {
-//           title: req.body.title,
-//           description: req.body.description,
-//         },
-//       }
-//     );
-//     res.json(updateLegionInfo);
-//     console.log("Changes are successfully");
-//   } catch (error) {
-//     res.json({ message: error });
-//   }
-// });
+router.patch("/:_id", async (req: Request, res: Response) => {
+  try {
+    const updateLegionInfo = await LeagueInfo.updateOne({ _id: req.params._id }, req.body);
+    res.json(updateLegionInfo);
+    console.log("Changes are successfully");
+  } catch (error) {
+    res.json({ message: error });
+  }
+});
 
 export default router;

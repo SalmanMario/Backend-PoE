@@ -25,5 +25,5 @@ const leagueInfoSchema = new mongoose.Schema({
 });
 
 const League = mongoose.model("League", leagueInfoSchema);
-console.log("Collection Name",League.collection.name);
+console.log("Collection Name", League.collection.name);
 export default League;
