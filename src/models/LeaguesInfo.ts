@@ -22,6 +22,10 @@ const leagueInfoSchema = new mongoose.Schema({
     type: Date,
     require: true,
   },
+  description: {
+    type: String,
+    require: true,
+  },
 });
 
 const League = mongoose.model("League", leagueInfoSchema);
